@@ -1,0 +1,57 @@
+<p-progressBar *ngIf="blocked" mode="indeterminate"></p-progressBar>
+<div class="ui-g-12">
+	<p-blockUI [blocked]="blocked" [target]="container" ></p-blockUI>
+	<p-toast class="toast-style" position="top-center"></p-toast>
+	<div class="ui-g-12 ui-sm-12 name-list">
+		<p-table #dt [columns]="cols" [value]="namesList" [paginator]="true"
+			[rows]="10"> 
+			<ng-template pTemplate="header" let-columns>
+				<tr>
+					<th>Search </th>
+				</tr>
+				<tr>
+					<th>
+						<p-radioButton name="searchName" value="customer"
+							label="Customer" [(ngModel)]="selectedValue" (click)="getList()"
+							[disabled]="isDisabled">
+							
+						</p-radioButton><br> 
+						<p-radioButton #employee
+							name="searchName" value="employee" label="Employee"
+							[(ngModel)]="selectedValue" (click)="getList()"
+							[disabled]="isDisabled">
+						</p-radioButton><br>
+						<p-radioButton 
+							name="searchName" value="newEmployee" label="New Employee"
+							[(ngModel)]="selectedValue" (click)="getList()"
+							[disabled]="isDisabled">
+						</p-radioButton>
+					</th>
+				</tr>
+				<tr>
+            		<input type="text" pInputText size="20" placeholder="Search" (input)="dt.filterGlobal($event.target.value,'contains')" class="input-search" [disabled]="isDisabled"/>
+					
+				</tr>
+		</ng-template>
+		 
+		<ng-template pTemplate="body" let-rowData let-columns="columns">
+			<tr [pSelectableRow]="rowData" *ngIf="!isDisabled" >
+				<td>
+					<a *ngIf="isEmployeeSelected"
+					[routerLink]="['employee', rowData.emailPrimary]">
+					{{rowData[columns[0].field]+' '+rowData[columns[1].field]}}</a> 
+					<a *ngIf="isCustomerSelected" [routerLink]="['customer',rowData.facilityName,rowData[columns[2].field],rowData[columns[3].field],rowData[columns[4].field]]" > {{rowData[columns[2].field]+' , '+rowData[columns[3].field]+' , '+rowData[columns[4].field]}} </a> 
+					<a *ngIf="isNewEmployeeSelected"
+					[routerLink]="['newemployee', rowData.email]">
+					{{rowData[columns[5].field]+' '+rowData[columns[6].field]}}</a> 
+				</td>
+					
+			</tr>
+		</ng-template> 
+		
+		</p-table>
+	</div>
+	<div class="ui-g-12 ui-sm-12 side-table">
+		<router-outlet></router-outlet>
+	</div>
+</div>

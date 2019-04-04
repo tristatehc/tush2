@@ -1,0 +1,30 @@
+
+button{
+	width:100%;
+}
+
+.customer-info {
+	color:rgb(192, 49, 49);
+	float:left;
+}
+
+.back{
+	float:right;
+}
+
+.ui-button.grey-button:hover {
+   background-color: #d3d3d3;
+   border-color: #d3d3d3;
+   color: rgb(197, 46, 46);
+   border:#d3d3d3;
+   background: #d3d3d3;
+   
+}
+
+.ui-button.grey-button{
+	background-color: #e4e4e4;
+    border-color: #e4e4e4;
+    color: rgb(68, 26, 146);
+    border:#e4e4e4;
+    background: #e4e4e4;
+}

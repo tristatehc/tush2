@@ -1,0 +1,62 @@
+
+<div class="container" *ngIf="!loadComponent">
+
+<div class="btn-group">
+		<div class="btn btn-primary" mwlCalendarPreviousView [view]="view"
+			[(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+			Previous</div>
+		<div class="btn btn-outline-secondary" mwlCalendarToday
+			[(viewDate)]="viewDate">{{ viewDate | date:'LLL'}}</div>
+		<div class="btn btn-primary" mwlCalendarNextView [view]="view"
+			[(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+			Next</div>
+
+	</div>
+	<br>
+	<div align="center">
+		<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+	</div>
+	<ng-template #customCellTemplate let-day="day" let-locale="locale" >
+	
+  		<div class="cal-cell-top" class="ui-g-12">
+  			<span class="cal-day-number" style="font-weight: bolder">{{day.date | date : 'E'}}<br>{{ day.date |
+				calendarDate:'monthViewDayNumber':locale }}</span>
+		</div>		
+		
+        <div style="padding:2%; "> 
+	  		<div><span class="label label-default" #gray id="{{ day.date | date: 'MM/dd/yyyy'}}" >{{grayLabel.get(gray.id)}}</span></div>
+			
+			<div>	<span class="label label-primary" #darkBlue id="{{ day.date | date: 'MM/dd/yyyy'}}" >{{darkBlueLabel.get(darkBlue.id)}}</span></div>
+			<div>	<span class="label label-success" #skyBlue id="{{ day.date | date: 'MM/dd/yyyy'}}" >{{skyBlueLabel.get(skyBlue.id)}}</span></div>
+			<div>	<span class="label label-info" #green id="{{ day.date | date: 'MM/dd/yyyy'}}" >{{greenLabel.get(green.id)}}</span></div>
+			<div>	<span class="label label-warning" #orange id="{{ day.date | date: 'MM/dd/yyyy'}}" >{{orangeLabel.get(orange.id)}}</span></div>
+			<div>	<span class="label label-danger"#red id="{{ day.date | date: 'MM/dd/yyyy'}}" >{{redLabel.get(red.id)}}</span></div>
+	  	</div>
+  
+  
+	</ng-template>
+
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view
+    *ngSwitchCase="'month'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [cellTemplate]="customCellTemplate"
+    (dayClicked)="getShiftDetails()">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view
+    *ngSwitchCase="'week'"
+    [viewDate]="viewDate"
+    [events]="events">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+    *ngSwitchCase="'day'"
+    [viewDate]="viewDate"
+    [events]="events">
+  </mwl-calendar-day-view>
+</div>
+</div>
+
+
+
+

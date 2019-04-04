@@ -1,0 +1,421 @@
+<p-progressBar *ngIf="blocked" mode="indeterminate"></p-progressBar>
+
+<p-accordion>
+    <p-accordionTab header="Search">
+    <div class=" ui-g-12">
+	<div class="ui-g-12">
+		<div class="ui-g-12 filter-block">
+			
+			<div class="ui-g-12 ">
+				<div class="ui-g-12 ui-sm-12">
+					<div class="ui-g-2 ui-sm-12">
+						<label>Shift From Date:</label>
+					</div>
+					<div class="ui-g-4 ui-sm-12">
+ <!--	<p-calendar disabled  appendTo="body" *ngIf="col.field=='shiftDate'" [(ngModel)]="rowData[col.field]" dateFormat="yy-mm-dd"></p-calendar>
+
+	 <p-calendar [(ngModel)]="shiftDateFrom" [showIcon]="true" dateFormat="mm/dd/yy"  [defaultDate]="defaultDate"></p-calendar>
+-->	 <p-calendar [(ngModel)]="fromSearchDate" [showIcon]="true" dateFormat="mm/dd/yy"  [defaultDate]="defaultDate"> </p-calendar>
+	</div>
+					<div class="ui-g-2 ui-sm-12">
+						<label>Shift To Date:</label>
+					</div>
+					<div class="ui-g-4 ui-sm-12">
+						<p-calendar [(ngModel)]="toSearchDate" [showIcon]="true" dateFormat="mm/dd/yy" [defaultDate]="defaultDate">  </p-calendar>
+					</div>
+				</div>
+				
+			</div>
+			<div class="ui-g-12 ">
+				<div class="ui-g-12 ui-sm-12">
+					
+					<div class="ui-g-2 ui-sm-4">
+							<p-checkbox name="future1" value="future1" label="future1" [(ngModel)]="selectedShift7To3" ></p-checkbox>
+					</div>
+					
+					<div class="ui-g-2 ui-sm-4">
+							<p-checkbox name="future2" value="future2" label="future2" [(ngModel)]="selectedShift7To3" ></p-checkbox>
+					</div>
+					
+					<div class="ui-g-2 ui-sm-4">
+							<p-checkbox name="future3" value="future3" label="future3" [(ngModel)]="selectedShift7To3" ></p-checkbox>
+					</div>
+					
+					
+					<div class="ui-g-2 ui-sm-4">
+							<p-checkbox name="future4" value="future4" label="future4" [(ngModel)]="selectedShift7To3" ></p-checkbox>
+					</div>
+				</div>
+				
+			</div>
+			<div class="ui-g-12 ">
+				<div class="ui-g-12 ui-sm-12">
+					
+					<div class="ui-g-2 ui-sm-4">
+						<p-radioButton name="future5" value="future5" label="future5" [(ngModel)]="futureRadioButton" ></p-radioButton>
+					</div>
+					<div class="ui-g-2 ui-sm-4">
+						<p-radioButton name="future6" value="future6" label="future6" [(ngModel)]="futureRadioButton" ></p-radioButton>
+					</div>
+				</div>
+				
+			</div>
+			<div class="ui-g-12" align="center">
+				<button pButton type="submit " label="Search" (click)="search()"></button>
+			</div>
+		</div>
+	</div>
+</div>
+    </p-accordionTab>
+</p-accordion>
+<div class="ui-g-12">
+	<p-blockUI [blocked]="blocked" [target]="ui-g"></p-blockUI>
+	<p-toast position="top-center"></p-toast>
+	<div class="ui-g-12">
+		
+		
+		
+		<p-table #availDt [columns]="availCols" [value]="userAvailabilities"
+			 [rows]="10" [autoLayout]="true" dataKey="shiftId" > 
+			 			<ng-template pTemplate="caption">
+		
+							 
+							   
+
+			<div class="right">
+				<input type="text" pInputText size="20" placeholder="Search"
+				(input)="availDt.filterGlobal($event.target.value, 'contains')"
+				style="width: 20%">
+			</div>
+			</ng-template> 
+			<ng-template pTemplate="header" let-columns>
+				<tr>
+					 <th style="width: 1em"></th>
+					<th *ngFor="let col of columns" class="center">{{col.header}}</th>
+				</tr>
+	
+			</ng-template> 
+			<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" >
+				<tr   >
+					<td >
+							<a  href="#" [pRowToggler]="rowData" >
+				                    <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+				            </a>
+			        </td>
+				
+					<td *ngFor="let col of columns"  class="center">
+					
+		               
+		             
+	<!--					<p-calendar appendTo="body" *ngIf="col.field=='timeIn' || col.field=='timeOut' || col.field=='breakTime'" [timeOnly]="true" hourFormat="24" [(ngModel)]="rowData[col.field]" ></p-calendar>
+					<p-calendar appendTo="body" *ngIf="col.field=='timeIn' || col.field=='timeOut' || col.field=='breakTime'" dateFormat="yyyy-MM-dd'T'HH:mm:ss.sssZ"  [(ngModel)]="00:00"  ></p-calendar>
+-->		
+<!--<p-calendar id="field_stockDate" type="datetime-local" [showIcon]="true" name="stockDate" [(ngModel)]="itemStockLevel.stockDate" showTime="true" hourFormat="24" dateFormat="yy-mm-dd"></p-calendar>-->	
+<!--  	<p-calendar appendTo="body" *ngIf="col.field=='timeIn' || col.field=='timeOut' || col.field=='breakTime'" type="datetime-local" [showIcon]="true" [showTime]="true" hourFormat="24"  [dateFormat]="yyyy-MM-dd" [defaultDate]="defaultDate"    [(ngModel)]="rowData[col.field]"  ></p-calendar>  
+	-->	 
+
+<!--
+<p-calendar [(ngModel)]="rowData[col.field]"
+            [defaultDate]="defaultDate" 
+            name="startAnalyze" 
+            [showTime]="true" 
+            [dateFormat]="dateFormat" 
+			[locale]="ru"></p-calendar>
+	-->
+
+
+ 
+	<p-calendar disabled  appendTo="body" *ngIf="col.field=='shiftDate'" [(ngModel)]="rowData[col.field]" dateFormat="yy-mm-dd"></p-calendar>
+	
+<!--
+<label  cols="50" appendTo="body" *ngIf="col.field=='shiftDate'" for="kkdddddddd"> {{rowData[col.field]}} </label>
+ <label  style="width: 100px;" appendTo="body" *ngIf="col.field=='shiftDate'" for="kkdddddddd"> {{rowData[col.field]}} </label>
+-->
+<!--<label for="male">Male</label>
+	-->			   <div class="ui-g-12" *ngIf="col.field === 'action' ">
+						<button class="ui-g-4"  pButton type="button" (click)="update(rowData,'save')"  class="ui-button-raised ui-button-rounded" label="Save" ></button>
+			<!--			<button class="ui-g-8"  pButton type="button" (click)="update(r
+				owData,'delete')"  class="ui-button-raised ui-button-rounded ui-button-danger" label="Remove" ></button>
+			-->		</div>
+					
+					<textarea *ngIf="col.field === 'comments'" pInputTextarea id="specialNotes_id" [(ngModel)]="rowData[col.field]"></textarea>
+					<div *ngIf="!(col.field=='shiftTitleCode' || col.field=='shiftTime' || col.field=='timeIn' || col.field === 'nameList' || col.field=='timeOut' || col.field=='breakTime' || col.field === 'action' || col.field === 'comments'|| col.field === 'commentsexpand'  || col.field === 'status' || col.field === 'shiftDate' ||col.field === 'messageCadidateList')"  [innerHTML]="rowData[col.field]"></div>
+				
+				
+					<p-dropdown appendTo="body" *ngIf="col.field === 'nameList'" [(ngModel)]="rowData.selectedName" (onChange)="nameChanged($event,rowData)" [options]="rowData[col.field]"  filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+					</p-dropdown>
+
+					
+
+                <!--
+					<p-dropdown disabled appendTo="body" *ngIf="col.field === 'shiftTitleCode'" [(ngModel)]="rowData.selectedTitle" [options]="rowData[col.field]"  filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+					</p-dropdown>
+				-->
+				
+				
+				<p-dropdown  disabled appendTo="body" *ngIf="col.field === 'shiftTitleCode'" [(ngModel)]="rowData.selectedTitle" [options]="rowData[col.field]"  filter="true" [style]="{'width':'15em'}">
+					<ng-template let-item pTemplate="selectedItem">
+						<span>{{item.label}}</span>
+					</ng-template>
+					<ng-template let-name pTemplate="item">
+						<div>
+							<div>{{name.label}}</div>
+						</div>
+					</ng-template>
+				</p-dropdown>
+
+  
+
+
+
+					<p-dropdown disabled appendTo="body" *ngIf="col.field === 'shiftTime'" [(ngModel)]="rowData.selectedShiftTime" [options]="rowData[col.field]"  filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+					</p-dropdown>
+					<p-dropdown appendTo="body" *ngIf="col.field === 'status'" [(ngModel)]="rowData.selectedStatus" [options]="rowData[col.field]"  filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+					</p-dropdown>
+					<p-multiSelect appendTo="body" *ngIf="col.field === 'messageCadidateList'" [(ngModel)]="rowData.selectedMessageCadidates" [options]="rowData[col.field]"  [style]="{'width':'15em'}">
+						    
+					</p-multiSelect>
+					</td>
+				</tr>
+				 
+			</ng-template>
+			 <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+		        <tr >
+		             <td [attr.colspan]="columns.length + 1">
+		            	<textarea disabled rows="10" cols="100" pInputTextarea  [(ngModel)]="rowData.comments"></textarea>
+		            </td>	
+		                
+		           
+		        </tr>
+		    </ng-template>
+			 
+		</p-table>
+
+
+
+
+
+
+<!--     Add shift component -->
+
+
+
+
+		<br>
+		<div style="float:left">
+			<div class="ui-g-6">
+		      <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+		     </div>
+		     <div class="ui-g-5">
+		      <button pButton type="button" label="Cancel" [routerLink]="['../']" (click)="cancel()"></button>
+			</div>
+		</div>
+		
+		<p-dialog  header="Shift Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '300px'} ">
+		    <div class="ui-g">
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="shiftDate_id">Shift Date</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-calendar  id="shiftDate_id" appendTo="body"   dateFormat="yy-mm-dd" [(ngModel)]="assignedShift.shiftDate"> </p-calendar>
+		            </div>
+		        </div>
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="id_id" style="text-align: left">IdG</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<input disabled id="id_id" type="text"  [(ngModel)]="assignedShift.shiftId"  pInputText/>
+		            </div>
+				</div>
+				
+
+
+
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="title_id">Title</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-dropdown appendTo="body"  id="title_id" (onChange)="onTitleChange($event.value)" [(ngModel)]="selectedTitle" [options]="assignedShift.shiftTitleCode"  filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+						</p-dropdown>
+		            </div>
+		        </div>
+		        
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="shift_id">Shift</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-dropdown appendTo="body"  id="shift_id" [options]="assignedShift.shiftTime" [(ngModel)]="selectedShiftTime" filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+						</p-dropdown>
+		            </div>
+		        </div>
+		        
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="name_id">Name</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-dropdown appendTo="body"  id="name_id" [options]="names" [(ngModel)]="selectedName" filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+						</p-dropdown>
+		            </div>
+		        </div>
+		        
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="status_id">Status</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-dropdown appendTo="body"  id="status_id" [options]="assignedShift.status" [(ngModel)]="selectedStatus" filter="true" [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+						</p-dropdown>
+		            </div>
+		        </div>
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="timeIn_id">Time In</label>
+		            </div>
+		            <div class="ui-g-3">
+		<!--				<p-calendar appendTo="body"  id="timeIn_id" [timeOnly]="true" hourFormat="24" dateFormat="yy-mm-dd"   [(ngModel)]="assignedShift.timeIn" ></p-calendar> -->
+						<p-calendar disabled appendTo="body"  id="timeIn_id"  dateFormat="yy-mm-dd"   [(ngModel)]="assignedShift.timeIn" ></p-calendar>
+						
+		            </div>
+		        </div>
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="timeOut_id">Time Out</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-calendar disabled appendTo="body"  id="timeOut_id"  dateFormat="yy-mm-dd"   [(ngModel)]="assignedShift.timeOut" ></p-calendar>
+		            </div>
+		        </div>
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="breakTime_id">Break</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-calendar disabled appendTo="body"  id="breakTime_id" dateFormat="yy-mm-dd"   [(ngModel)]="assignedShift.breakTime" ></p-calendar>
+		            </div>
+		        </div>
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="notify_id">Notify</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<p-multiSelect appendTo="body" id="notify_id" [options]="notifyNames" [(ngModel)]="selectedNotifiedName"  [style]="{'width':'15em'}">
+						    
+					</p-multiSelect>
+		            </div>
+		        </div>
+		        <div class="ui-g-12">
+		            <div class="ui-g-1 left">
+		                <label for="specialNotes_id">Special Notes</label>
+		            </div>
+		            <div class="ui-g-3">
+		            	<textarea disabled rows="10" cols="100" pInputTextarea id="specialNotes_id" [(ngModel)]="assignedShift.comments"></textarea>
+		            </div>
+		        </div>
+		        
+		       
+		    </div>
+		    <p-footer>
+		        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+		            <button type="button" pButton icon="pi pi-check" (click)="save()" label="Save"></button>
+		        </div>
+		    </p-footer>
+		</p-dialog>
+		
+		<p-dialog  header="Change Reason" [(visible)]="displayNameChange" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '300px'} ">
+		    <div class="ui-g">
+		    
+		  <div class="ui-g-12">
+		  			 <div class="ui-g-2 left">
+		                <label for="change_reason_id">Reason</label>
+		            </div>
+		            <div class="ui-g-10">
+		            	<p-dropdown appendTo="body"  id="change_reason_id" [options]="changeReasons" [(ngModel)]="changeReason"  [style]="{'width':'15em'}">
+						    <ng-template let-item pTemplate="selectedItem">
+						        <span>{{item.label}}</span>
+						    </ng-template>
+						    <ng-template let-name pTemplate="item">
+						        <div>
+						            <div>{{name.label}}</div>
+						        </div>
+						    </ng-template>
+						</p-dropdown>
+		           </div>
+		        </div>
+		    </div>
+		    <p-footer>
+		        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+		            <button type="button" pButton icon="pi pi-check" (click)="saveReason()" label="Save"></button>
+		        </div>
+		    </p-footer>
+		</p-dialog>
+	</div>
+</div>

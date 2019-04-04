@@ -1,0 +1,101 @@
+<p-progressBar *ngIf="blocked" mode="indeterminate"></p-progressBar>
+<p-blockUI [blocked]="blocked" ></p-blockUI>
+<p-toast class="toast-style" position="top-center" ></p-toast>
+<div class="ui-g-12 dropdown" align="left">
+	<div class="ui-g-1 ui-sm-4" >
+		<label>Select Title  </label>
+	</div>
+	<div class="ui-g-6 ui-sm-6">
+		<p-dropdown [options]="employeeType" [(ngModel)]="selectedEmployee" (onChange)="enableSave()" [disabled]="disableTitleDropdown"></p-dropdown>
+	</div>
+</div>
+
+ <ng-template
+      #weekTemplate
+      let-days="days"
+      let-locale="locale"  let-dayHeaderClicked="dayHeaderClicked"
+      let-eventDropped="eventDropped">
+      <app-calendar-header
+  		[(view)]="view"
+  		[(viewDate)]="viewDate"
+  		(viewDateChange)="dateChanged($event)"
+  		>
+		</app-calendar-header>
+      
+      <div class="cal-day-headers ui-g-12" >
+        <div
+          class="cal-header ui-g-12"
+          *ngFor="let day of days; trackBy:trackByWeekDayHeaderDate"
+          [class.cal-past]="day.isPast"
+          [class.cal-today]="day.isToday"
+          [class.cal-future]="day.isFuture"
+          [class.cal-weekend]="day.isWeekend"
+          [ngClass]="day.cssClass"
+          (mwlClick)="dayHeaderClicked.emit({day: day})"
+          mwlDroppable
+          (drop)="eventDropped.emit({event: $event.dropData.event, newStart: day.date})">
+          <div class="ui-g-12" >
+	          <b>{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</b>
+	          <span style="font-weight: bolder; margin-left: 2%">{{ day.date | calendarDate:'weekViewColumnSubHeader':locale }}</span>
+	          <br>
+	          <div class="ui-g-12" align="left">
+	          <div class="ui-g-6">
+	          Entering need for <span style="font-weight: bolder; color: red">{{selectedEmployee}}</span>
+	          </div>
+	          </div>
+	          <div class="ui-g-12">
+	          	<div class="ui-g-5 ui-sm-12">
+		          <div class="ui-g-12">
+		          	<div class="ui-g-2  ui-sm-4">
+		          	</div>
+		          	<div class="ui-g-5 ui-sm-5">
+		          		<div class="ui-g-4 ui-sm-2">
+		          			<label style="font-size: x-small;margin-left: 1%">Required</label>
+		          		</div>
+		          		<div class="ui-g-4 ui-sm-2">
+		          			<label style="font-size: x-small;">Assigned</label>
+		          		</div>
+		          		<div class="ui-g-4 ui-sm-2">
+		          			<label style="font-size: x-small;">Unassigned</label>
+		          		</div>
+		          	</div>
+		          </div>
+		          <div *ngFor="let confShift of configuredShifts" class="ui-g-12" align="center">
+					<div class="ui-g-3 ui-sm-4">
+						<label ><small>{{confShift.shiftTime}}</small></label>
+					</div>
+					<div  class="ui-g-3">
+						<input #reqDiv type="text" id="{{day.date | date: 'MM/dd/yyyy'+'_'+confShift.shiftTime}}" pInputText size="1" maxlength="2" style="margin-right: 5%" [ngModel]="shifts.get(selectedEmployee+'_'+reqDiv.id+'_'+'required')" (ngModelChange)="shifts.set(selectedEmployee+'_'+reqDiv.id+'_'+'required',reqDiv.value)" pKeyFilter="num"/>
+						<input type="text" id="{{day.date | date: 'MM/dd/yyyy'+'_'+confShift.shiftTime}}" pInputText size="1" maxlength="2" style="margin-right: 5%" [ngModel]="shifts.get(selectedEmployee+'_'+reqDiv.id+'_'+'assigned')" disabled="true"/>
+						<input type="text" id="{{day.date | date: 'MM/dd/yyyy'+'_'+confShift.shiftTime}}" pInputText size="1" maxlength="2" style="margin-right: 5%" [ngModel]="shifts.get(selectedEmployee+'_'+reqDiv.id+'_'+'unassigned')" disabled="true"/>
+					</div>
+				 </div>
+				</div>
+				<div class="ui-g-3 ui-sm-12" style="margin-top: 7%">
+					<div>
+						<div>
+						<textarea id="{{day.date | date: 'MM/dd/yyyy'}}" [rows]="6" [cols]="50" maxlength="200" pInputTextarea style="resize: none;" [ngModel]="comments.get(selectedEmployee+'_'+comnts.id)" (ngModelChange)="comments.set(selectedEmployee+'_'+comnts.id,comnts.value)" #comnts></textarea>
+						</div>
+					</div>
+				</div> 
+			</div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+<div [ngSwitch]="view">
+	<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate"
+		[events]="events" [cellTemplate]="customCellTemplate">
+	</mwl-calendar-month-view>
+	<mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate"
+		[events]="events" [headerTemplate]="weekTemplate"> </mwl-calendar-week-view>
+	
+</div>
+<br>
+<div class="ui-g-12 ui-sm-12 ui-md-12" align="center">
+	<button pButton type="button" label="Save" [disabled]="disabled" (click)="onSave()"></button>
+	<button pButton type="button" label="Cancel" [routerLink]="['../../../']"
+		(click)="cancel()"></button>
+</div>
